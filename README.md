@@ -1,18 +1,19 @@
-cppinput-lib
+# cppinput-lib
+
 cppinput-lib is a minimalistic, header-only C++ library designed for low-level, cross-platform a input event capture. It provides a clean, unified interface to abstract away the platform-specific complexities of reading keyboard state from system APIs and device descriptors.
 
+---
+
 Features
-Header-Only: Simplifies integration into projects, requiring no separate compilation or linking steps. Just include the header.
+**Header-Only**: Simplifies integration into projects, requiring no separate compilation or linking steps. Just include the header.
 
-Cross-Platform: Provides native support for both Linux and Windows operating systems.
+**Cross-Platform**: Provides native support for both Linux and Windows operating systems.
 
-Operating Modes: Offers two distinct modes for flexible event capture, managed via bitwise flags:
+## **Operating Modes**: Offers two distinct modes for flexible event capture, managed via bitwise flags:
 
 Global Mode: Reads events directly from low-level input devices, ideal for system-wide shortcuts or applications without a graphical context.
 
 Window-Specific Mode: Integrates with the native windowing system's event loop (e.g., Wayland, X11, or Windows message loop) to capture events only when the application's window has focus.
-
-Minimalistic API: Exposes a straightforward, state-based API for polling keyboard status, ensuring high performance and a low footprint.
 
 Installation
 As cppinput-lib is a header-only library, installation is straightforward:
@@ -23,8 +24,10 @@ Add the cppinput directory to your project's include paths.
 
 Include keyboard.hh in your source files to access the library's functionality.
 
-Quick Usage Example
+**Quick Usage Example**
+
 The library's core is the Keyboard::IKeyboard interface. An instance can be initialized via a static factory method, and its behavior is configured using the Opt() method. The following example demonstrates how to set up a global key listener.
+
 ``` cpp
 #include "cppinput/keyboard/keyboard.hh"
 #include <iostream>
@@ -34,7 +37,7 @@ int main()
     // Obtain a handle to the IKeyboard interface.
     // The GetKeyboard::Init() factory method returns a concrete
     // implementation based on the host operating system.
-    Keyboard::IKeyboard* k = Keyboard::GetKeyboard::Init();
+    Keyboard::IKeyboard* k = Keyboard::GetKeyboard();
 
     // Configure the library to read keyboard events globally.
     // For window-specific input, use Keyboard::Options::WINDOW_READER.
