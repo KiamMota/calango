@@ -1,8 +1,8 @@
 #ifndef __IKEYBOARD_HH_
 #define __IKEYBOARD_HH_
 
-#include "cppinput/keyboard/kb_keys.hh"
-#include "cppinput/keyboard/options.hh"
+#include "input/keyboard/kb_keys.hh"
+#include "input/keyboard/options.hh"
 #include <functional>
 #include <iostream>
 #include <string>

@@ -1,8 +1,8 @@
 #ifndef _KEYBOARD_HH_
 #define _KEYBOARD_HH_
 
-#include "cppinput/backend/ikeyboard.hh"
-#include "cppinput/backend/linux_keyboard.hh"
+#include "input/keyboard/backend/linux_keyboard.hh"
+#include "input/keyboard/ikeyboard.hh"
 #include <cstdlib>
 #include <fcntl.h>
 

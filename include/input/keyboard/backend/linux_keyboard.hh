@@ -8,9 +8,9 @@
 #define _UNIXKBD_HH_
 
 #define LINUX_GLOBAL_KBFD "/dev/input/by-id/"
-#include "cppinput/backend/ikeyboard.hh"
-#include "cppinput/keyboard/kb_keys.hh"
-#include "cppinput/keyboard/options.hh"
+#include "input/keyboard/ikeyboard.hh"
+#include "input/keyboard/kb_keys.hh"
+#include "input/keyboard/options.hh"
 #include <fcntl.h>
 #include <filesystem>
 #include <linux/input.h>
