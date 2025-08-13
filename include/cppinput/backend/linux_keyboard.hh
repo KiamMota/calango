@@ -1,5 +1,7 @@
 
+#include <functional>
 #include <linux/input-event-codes.h>
+#include <thread>
 #ifdef __linux__
 
 #ifndef _UNIXKBD_HH_
@@ -16,7 +18,7 @@
 
 namespace Backend {
 
-class LinuxKeyboard : public IKeyboard {
+class LinuxKeyboard : public Keyboard::IKeyboard {
 
 public:
   LinuxKeyboard() {
@@ -34,6 +36,11 @@ public:
       if (ev.type == EV_KEY && ev.value == 1)
         return true;
     return false;
+  }
+
+  void IsPressed(std::function<void()> fn) override {
+    callbackThread = std::thread();
+    callbackThread.detach();
   }
 
   bool IsReleased() override {
@@ -61,6 +68,7 @@ public:
   int GetCode() override { return ev.code; }
 
 private:
+  std::thread callbackThread;
   Keyboard::Options opt;
   bool ReadFd() {
     return_read = read(file_descriptor, &ev, sizeof(ev));

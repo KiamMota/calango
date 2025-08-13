@@ -8,17 +8,12 @@
 
 namespace Keyboard {
 
-class GetKeyboard {
-public:
-  static Backend::IKeyboard *Init() {
+IKeyboard *GetKeyboard() {
 #ifdef __linux__
-    Backend::LinuxKeyboard *linux_instance = new Backend::LinuxKeyboard();
-    return linux_instance;
+  Backend::LinuxKeyboard *linux_instance = new Backend::LinuxKeyboard();
+  return linux_instance;
 #endif
-  }
+} // namespace Keyboard
 
-private:
-  GetKeyboard();
-};
 } // namespace Keyboard
 #endif // _KEYBOARD_HH_
