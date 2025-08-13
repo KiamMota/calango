@@ -1,22 +1,24 @@
 #ifndef _KEYBOARD_HH_
 #define _KEYBOARD_HH_
 
-#include "cppinput/internal/ikeyboard.hh"
-#include "cppinput/internal/linux_keyboard.hh"
+#include "cppinput/backend/ikeyboard.hh"
+#include "cppinput/backend/linux_keyboard.hh"
 #include <cstdlib>
 #include <fcntl.h>
 
-class Keyboard {
+namespace Keyboard {
+
+class GetKeyboard {
 public:
-  static IKeyboard *Init() {
+  static Backend::IKeyboard *Init() {
 #ifdef __linux__
-    LinuxKeyboard *linux_instance = new LinuxKeyboard();
+    Backend::LinuxKeyboard *linux_instance = new Backend::LinuxKeyboard();
     return linux_instance;
 #endif
   }
 
 private:
-  Keyboard();
+  GetKeyboard();
 };
-
+} // namespace Keyboard
 #endif // _KEYBOARD_HH_

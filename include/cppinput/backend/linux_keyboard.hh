@@ -6,12 +6,15 @@
 #define _UNIXKBD_HH_
 
 #define LINUX_GLOBAL_KBFD "/dev/input/by-id/"
-#include "cppinput/internal/ikeyboard.hh"
+#include "cppinput/backend/ikeyboard.hh"
 #include "cppinput/keyboard/kb_keys.hh"
+#include "cppinput/keyboard/options.hh"
 #include <fcntl.h>
 #include <filesystem>
 #include <linux/input.h>
 #include <unistd.h>
+
+namespace Backend {
 
 class LinuxKeyboard : public IKeyboard {
 
@@ -24,6 +27,7 @@ public:
       return;
     }
   }
+  void Options(Keyboard::Options opt) override { this->opt = opt; }
 
   bool IsPressed() override {
     if (ReadFd())
@@ -39,7 +43,14 @@ public:
     return false;
   }
 
-  bool IsKeyPressed(KB_KEYS kb) override {
+  bool IsRepeated() override {
+    if (ReadFd())
+      if (ev.type == EV_KEY && ev.value == 2)
+        return true;
+    return false;
+  }
+
+  bool IsKeyPressed(Keyboard::KB_KEYS kb) override {
     if (ev.type == EV_KEY && ev.value == 1) {
       if (ev.code == kb)
         return true;
@@ -50,6 +61,7 @@ public:
   int GetCode() override { return ev.code; }
 
 private:
+  Keyboard::Options opt;
   bool ReadFd() {
     return_read = read(file_descriptor, &ev, sizeof(ev));
     if (return_read == -1)
@@ -80,6 +92,8 @@ private:
     }
   }
 };
-#endif // _UNIXKBD_HH_
 
+} // namespace Backend
+
+#endif // _UNIXKBD_HH_
 #endif // __linux__
