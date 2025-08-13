@@ -43,6 +43,8 @@ int main()
     // For window-specific input, use Keyboard::Options::WINDOW_READER.
     k->Opt(Keyboard::Options::GLOBAL_READER);
 
+    k->IsPressed([](){std::cout << "Hello, world!" << std::endl;})
+
     while (true)
     {
         // Polling the keyboard state.
@@ -51,6 +53,7 @@ int main()
             std::cout << "A key is currently being pressed!" << std::endl;
         }
     }
+
 
     // Important: Release the memory for the keyboard object.
     delete k;
