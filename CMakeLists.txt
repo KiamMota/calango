@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.16)
-project(cppaudio-lib CXX)
+project(cppinput CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_executable(cinp test/main.cpp)
-include_directories(cinp include)
+add_executable(ccinp test/main.cpp)
+include_directories(ccinp include)
