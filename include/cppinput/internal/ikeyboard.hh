@@ -10,7 +10,7 @@ class IKeyboard {
 public:
   virtual bool IsPressed() = 0;
   virtual bool IsReleased() = 0;
-  virtual bool IsKeyPressed(int kb) = 0;
+  virtual bool IsKeyPressed(KB_KEYS kb) = 0;
 };
 
 #endif
