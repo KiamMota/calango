@@ -1,18 +1,14 @@
-#include "cppinput/kb_keys.hh"
-#include <linux/input-event-codes.h>
+
 #ifdef __linux__
 
 #ifndef _UNIXKBD_HH_
 #define _UNIXKBD_HH_
 
 #define DEFAULT_LINUX_DEVICE_BYID "/dev/input/by-id/"
-#include <filesystem>
-#include <iostream>
-#include <string>
-#include <vector>
-
 #include "cppinput/internal/ikeyboard.hh"
+#include "cppinput/keyboard/kb_keys.hh"
 #include <fcntl.h>
+#include <filesystem>
 #include <linux/input.h>
 #include <unistd.h>
 
@@ -42,7 +38,11 @@ public:
     return false;
   }
 
-  bool IsKeyPressed(KB_KEYS kb) override { if (ReadFd()) }
+  bool IsKeyPressed(KB_KEYS kb) override {
+    if (ReadFd() && ev.code == kb)
+      return true;
+    return false;
+  }
 
 private:
   bool ReadFd() {

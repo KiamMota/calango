@@ -3,8 +3,8 @@
 
 #ifdef __linux__
 
-enum KB_KEYS {
-  KEY_RESERVED,
+enum KB_KEYS : int {
+  KEY_RESERVED = 0,
   KEY_ESC,
   KEY_1,
   KEY_2,
