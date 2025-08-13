@@ -10,7 +10,7 @@
 
 namespace Keyboard {
 
-IKeyboard *GetKeyboard() {
+IKeyboard *Start() {
 #ifdef __linux__
   Backend::LinuxKeyboard *linux_instance = new Backend::LinuxKeyboard();
   return linux_instance;

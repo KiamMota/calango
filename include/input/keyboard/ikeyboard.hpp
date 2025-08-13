@@ -6,6 +6,7 @@ namespace Keyboard {
 
 class IKeyboard {
 public:
+  virtual void Stop() = 0;
   virtual bool IsPressed() = 0;
   virtual bool IsReleased() = 0;
   virtual bool IsRepeated() = 0;

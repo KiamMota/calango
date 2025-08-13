@@ -1,4 +1,5 @@
 
+#include <cstring>
 #ifdef __linux__
 
 #ifndef _LINUXKEYBOARD_HH_
@@ -34,6 +35,14 @@ public:
     }
   }
 
+  ~LinuxKeyboard() { delete this; }
+
+  void Stop() override {
+    close(file_descriptor);
+    memset(&file_descriptor, 0, sizeof(file_descriptor));
+    memset(&ev, 0, sizeof(ev));
+  }
+
   bool IsPressed() override {
     if (ReadFd())
       if (ev.type == EV_KEY && ev.value == 1)
@@ -56,10 +65,11 @@ public:
   }
 
   bool IsKeyPressed(Keyboard::KB_KEYS kb) override {
-    if (ev.type == EV_KEY && ev.value == 1) {
-      if (ev.code == kb)
-        return true;
-    }
+    if (ReadFd())
+      if (ev.type == EV_KEY && ev.value == 1) {
+        if (ev.code == kb)
+          return true;
+      }
     return false;
   }
 
@@ -67,15 +77,13 @@ public:
 
 private:
   bool ReadFd() {
-    return_read = read(file_descriptor, &ev, sizeof(ev));
-    if (return_read == -1)
+    if (read(file_descriptor, &ev, sizeof(ev)) == -1)
       return false;
     return true;
   }
 
   std::string file_name_descriptor;
   int file_descriptor;
-  int return_read;
   input_event ev;
 
   void FindKeyboardDevice() {
