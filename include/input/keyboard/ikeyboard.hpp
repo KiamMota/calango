@@ -1,18 +1,11 @@
-#ifndef __IKEYBOARD_HH_
-#define __IKEYBOARD_HH_
+#ifndef _IKEYBOARD_HH_
+#define _IKEYBOARD_HH_
 
 #include "input/keyboard/kb_keys.hh"
-#include "input/keyboard/options.hh"
-#include <functional>
-#include <iostream>
-#include <string>
-#include <vector>
-
 namespace Keyboard {
 
 class IKeyboard {
 public:
-  virtual void Options(Keyboard::Options opt) = 0;
   virtual bool IsPressed() = 0;
   virtual bool IsReleased() = 0;
   virtual bool IsRepeated() = 0;

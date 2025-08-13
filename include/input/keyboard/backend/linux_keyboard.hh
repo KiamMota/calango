@@ -1,16 +1,20 @@
 
-#include <functional>
-#include <linux/input-event-codes.h>
-#include <thread>
 #ifdef __linux__
 
-#ifndef _UNIXKBD_HH_
-#define _UNIXKBD_HH_
+#ifndef _LINUXKEYBOARD_HH_
+#define _LINUXKEYBOARD_HH_
 
-#define LINUX_GLOBAL_KBFD "/dev/input/by-id/"
-#include "input/keyboard/ikeyboard.hh"
+/* local headers */
+#include "input/keyboard/ikeyboard.hpp"
 #include "input/keyboard/kb_keys.hh"
-#include "input/keyboard/options.hh"
+
+/* sdl includes */
+
+#include <iostream>
+#include <vector>
+
+/* linux definitions */
+#define LINUX_GLOBAL_KBFD "/dev/input/by-id/"
 #include <fcntl.h>
 #include <filesystem>
 #include <linux/input.h>
@@ -94,5 +98,5 @@ private:
 
 } // namespace Backend
 
-#endif // _UNIXKBD_HH_
+#endif // _LINUXKEYBOARD_HH_
 #endif // __linux__

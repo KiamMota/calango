@@ -1,10 +1,12 @@
 #ifndef _KEYBOARD_HH_
 #define _KEYBOARD_HH_
 
+#include "input/keyboard/ikeyboard.hpp"
+#ifdef __linux__
+
 #include "input/keyboard/backend/linux_keyboard.hh"
-#include "input/keyboard/ikeyboard.hh"
-#include <cstdlib>
-#include <fcntl.h>
+
+#endif
 
 namespace Keyboard {
 
