@@ -29,18 +29,12 @@ public:
       return;
     }
   }
-  void Options(Keyboard::Options opt) override { this->opt = opt; }
 
   bool IsPressed() override {
     if (ReadFd())
       if (ev.type == EV_KEY && ev.value == 1)
         return true;
     return false;
-  }
-
-  void IsPressed(std::function<void()> fn) override {
-    callbackThread = std::thread();
-    callbackThread.detach();
   }
 
   bool IsReleased() override {
@@ -68,8 +62,6 @@ public:
   int GetCode() override { return ev.code; }
 
 private:
-  std::thread callbackThread;
-  Keyboard::Options opt;
   bool ReadFd() {
     return_read = read(file_descriptor, &ev, sizeof(ev));
     if (return_read == -1)
@@ -81,7 +73,6 @@ private:
   int file_descriptor;
   int return_read;
   input_event ev;
-  std::string absolute_path;
 
   void FindKeyboardDevice() {
     const char *trigger = "event-kbd";
