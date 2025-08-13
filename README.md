@@ -1,2 +1,6 @@
-# cppaudio-lib
-a header-only bloat-free library for audio in c++.
+# cppinput-lib
+cppinput-lib is a header-only lib for capturing system inputs.
+---
+## Objects on display:
+### Keyboard: 
+  object responsible for representing the keyboard event in the system.
