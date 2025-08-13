@@ -1,10 +1,11 @@
 
+#include <linux/input-event-codes.h>
 #ifdef __linux__
 
 #ifndef _UNIXKBD_HH_
 #define _UNIXKBD_HH_
 
-#define DEFAULT_LINUX_DEVICE_BYID "/dev/input/by-id/"
+#define LINUX_GLOBAL_KBFD "/dev/input/by-id/"
 #include "cppinput/internal/ikeyboard.hh"
 #include "cppinput/keyboard/kb_keys.hh"
 #include <fcntl.h>
@@ -39,10 +40,14 @@ public:
   }
 
   bool IsKeyPressed(KB_KEYS kb) override {
-    if (ReadFd() && ev.code == kb)
-      return true;
+    if (ev.type == EV_KEY && ev.value == 1) {
+      if (ev.code == kb)
+        return true;
+    }
     return false;
   }
+
+  int GetCode() override { return ev.code; }
 
 private:
   bool ReadFd() {
@@ -61,7 +66,7 @@ private:
   void FindKeyboardDevice() {
     const char *trigger = "event-kbd";
 
-    std::filesystem::path linux_input_descriptor = DEFAULT_LINUX_DEVICE_BYID;
+    std::filesystem::path linux_input_descriptor = LINUX_GLOBAL_KBFD;
     std::vector<std::string> devices;
     for (auto &v :
          std::filesystem::directory_iterator(linux_input_descriptor)) {
@@ -70,7 +75,7 @@ private:
 
     for (int i = 0; i < devices.size(); i++) {
       if (devices.at(i).find(trigger) != std::string::npos) {
-        file_name_descriptor = DEFAULT_LINUX_DEVICE_BYID + devices.at(i);
+        file_name_descriptor = LINUX_GLOBAL_KBFD + devices.at(i);
       }
     }
   }
