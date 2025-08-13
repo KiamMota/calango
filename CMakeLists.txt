@@ -6,4 +6,4 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_executable(cppaudio-lib test/main.cpp)
-include_directories(cppaudio-lib cppaudio)
+include_directories(cppaudio-lib cppinput)
