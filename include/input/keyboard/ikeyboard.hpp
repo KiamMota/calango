@@ -1,7 +1,7 @@
 #ifndef _IKEYBOARD_HH_
 #define _IKEYBOARD_HH_
 
-#include "input/keyboard/kb_keys.hh"
+#include "input/keyboard/kbkeys.hpp"
 namespace Keyboard {
 
 class IKeyboard {

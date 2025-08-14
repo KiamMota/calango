@@ -7,7 +7,7 @@
 
 /* local headers */
 #include "input/keyboard/ikeyboard.hpp"
-#include "input/keyboard/kb_keys.hh"
+#include "input/keyboard/kbkeys.hpp"
 
 /* sdl includes */
 

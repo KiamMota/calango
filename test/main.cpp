@@ -1,4 +1,15 @@
 
-#include "input/keyboard/get_backend.hh"
-#include "input/keyboard/ikeyboard.hpp"
-int main() { Keyboard::IKeyboard *kb = Keyboard::GetBackend(); }
+#include "input/keyboard/getbackend.hpp"
+#include "input/mouse/getbackend.hpp"
+#include "input/mouse/imouse.hpp"
+#include <ctime>
+int main() {
+  Keyboard::IKeyboard *kb = Keyboard::GetBackend();
+  Mouse::IMouse *ms = Mouse::GetBackend();
+
+  while (1) {
+    if (ms->IsClicked()) {
+      std::cout << "clicado!" << std::endl;
+    }
+  }
+}

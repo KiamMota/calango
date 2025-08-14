@@ -4,7 +4,7 @@
 #include "input/keyboard/ikeyboard.hpp"
 #ifdef __linux__
 
-#include "input/keyboard/backend/linux_keyboard.hh"
+#include "input/keyboard/backend/linux_keyboard.hpp"
 
 #endif
 
