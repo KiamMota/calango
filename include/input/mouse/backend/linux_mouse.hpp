@@ -1,3 +1,4 @@
+#include <linux/input-event-codes.h>
 #ifdef __linux__
 #ifndef _LINUXMOUSE_HPP_
 #define _LINUXMOUSE_HPP_
@@ -46,13 +47,16 @@ private:
   }
 
 public:
-  LinuxMouse() {
-    FindKeyboardDevice();
+  LinuxMouse() { FindKeyboardDevice(); }
+
+  void Run() override {
+
     main_descriptor = open(fileNameDescriptor.c_str(), O_RDONLY);
     if (main_descriptor == -1) {
       std::cerr << "error: cant open mouse file descriptor." << std::endl;
     }
   }
+
   void Stop() override {
     close(main_descriptor);
     memset(&main_descriptor, 0, sizeof(main_descriptor));
@@ -66,6 +70,7 @@ public:
       }
     return false;
   }
+
   bool IsStopped() override {
     if (ReadFd())
       if (ev.type != EV_REL)
@@ -73,7 +78,7 @@ public:
     return false;
   }
 
-  bool IsClicked() override {
+  bool IsPressed() override {
     if (ReadFd())
       if (ev.type == EV_KEY) {
         switch (ev.code) {
