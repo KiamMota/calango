@@ -1,10 +1,9 @@
 #ifndef _KB_KEYS_HH_
 #define _KB_KEYS_HH_
 
-#ifdef __linux__
-
 namespace Keyboard {
 
+#ifdef __linux__
 enum KB_KEYS {
   K_RESERVED = 0,
   K_ESC = 1,
@@ -91,7 +90,7 @@ enum KB_KEYS {
   K_KP0 = 82,
   K_KPDOT = 83,
 };
-}
 #endif // linux
+} // namespace Keyboard
 
 #endif

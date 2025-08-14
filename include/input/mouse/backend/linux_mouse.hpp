@@ -1,3 +1,4 @@
+#include <cstring>
 #include <fcntl.h>
 #include <iostream>
 #include <linux/input-event-codes.h>
@@ -53,7 +54,11 @@ public:
       std::cerr << "error: cant open mouse file descriptor." << std::endl;
     }
   }
-  void Stop() override { close(main_descriptor); }
+  void Stop() override {
+    close(main_descriptor);
+    memset(&main_descriptor, 0, sizeof(main_descriptor));
+    memset(&ev, 0, sizeof(ev));
+  }
 
   bool IsMoving() override {
     if (ReadFd())
