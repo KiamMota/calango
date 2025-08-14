@@ -1,5 +1,5 @@
-#include "input/keyboard/getbackend.hpp"
-#include "input/keyboard/ikeyboard.hpp"
+#include "input/keyboard/keyboard.hpp"
+
 int main() {
   Keyboard::IKeyboard *kb = Keyboard::GetBackend();
   kb->Run();

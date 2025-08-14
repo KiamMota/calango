@@ -1,9 +1,8 @@
-#include <linux/input-event-codes.h>
 #ifdef __linux__
 #ifndef _LINUXMOUSE_HPP_
 #define _LINUXMOUSE_HPP_
 
-#include "input/mouse/imouse.hpp"
+#include "input/mouse/internal/imouse.hpp"
 #include <cstring>
 #include <fcntl.h>
 #include <filesystem>

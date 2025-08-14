@@ -1,12 +1,10 @@
-
-#include <cstring>
 #ifdef __linux__
 
 #ifndef _LINUXKEYBOARD_HH_
 #define _LINUXKEYBOARD_HH_
 
 /* local headers */
-#include "input/keyboard/ikeyboard.hpp"
+#include "input/keyboard/internal/ikeyboard.hpp"
 #include "input/keyboard/kbkeys.hpp"
 
 /* sdl includes */

@@ -2,11 +2,10 @@
 #define _MOUSEBACKEND_HPP_
 
 #ifdef __linux__
-#include "input/mouse/backend/linux_mouse.hpp"
+#include "input/mouse/internal/linux_mouse.hpp"
 
 #endif
 
-#include "input/mouse/imouse.hpp"
 namespace Mouse {
 IMouse *GetBackend() {
 #ifdef __linux__
