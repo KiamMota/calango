@@ -9,6 +9,7 @@ public:
   virtual bool IsMoving() = 0;
   virtual bool IsStopped() = 0;
   virtual bool IsClicked() = 0;
+  virtual bool IsReleased() = 0;
   // virtual bool IsPressed() = 0;
   // virtual bool IsReleased() = 0;
 };

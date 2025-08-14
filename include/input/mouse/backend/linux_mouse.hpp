@@ -88,6 +88,27 @@ public:
       }
     return false;
   }
+
+  bool IsReleased() override {
+    if (ReadFd()) {
+      if (ev.type == EV_KEY) {
+        switch (ev.code) {
+        default:
+          return false;
+        case BTN_RIGHT:
+          if (ev.value == 0)
+            return true;
+        case BTN_LEFT:
+          if (ev.value == 0)
+            return true;
+        case BTN_MIDDLE:
+          if (ev.value == 0)
+            return true;
+        }
+      }
+    }
+    return false;
+  }
 };
 } // namespace Backend
 #endif // _LINUXMOUSE_HPP_

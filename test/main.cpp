@@ -8,8 +8,8 @@ int main() {
   Mouse::IMouse *ms = Mouse::GetBackend();
 
   while (1) {
-    if (ms->IsClicked()) {
-      std::cout << "clicado!" << std::endl;
+    if (ms->IsReleased()) {
+      std::cout << "solto!" << std::endl;
     }
   }
 }
