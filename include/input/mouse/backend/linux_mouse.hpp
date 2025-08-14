@@ -1,16 +1,15 @@
-#include <cstring>
-#include <fcntl.h>
-#include <iostream>
-#include <linux/input-event-codes.h>
-#include <linux/input.h>
-#include <unistd.h>
 #ifdef __linux__
 #ifndef _LINUXMOUSE_HPP_
 #define _LINUXMOUSE_HPP_
 
 #include "input/mouse/imouse.hpp"
+#include <cstring>
+#include <fcntl.h>
 #include <filesystem>
+#include <iostream>
+#include <linux/input.h>
 #include <string>
+#include <unistd.h>
 #include <vector>
 #define LINUX_GLOBAL_KBFD "/dev/input/by-id/"
 
