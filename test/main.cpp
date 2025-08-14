@@ -1,12 +1,4 @@
-#include "input/keyboard/ikeyboard.hpp"
-#include "input/keyboard/kb_keys.hh"
-#include "input/keyboard/start.hh"
 
-int main() {
-  auto k = Keyboard::Start();
-  while (1) {
-    if (k->IsKeyPressed(Keyboard::K_4)) {
-      std::cout << "pressionado C" << std::endl;
-    }
-  }
-}
+#include "input/keyboard/get_backend.hh"
+#include "input/keyboard/ikeyboard.hpp"
+int main() { Keyboard::IKeyboard *kb = Keyboard::GetBackend(); }
