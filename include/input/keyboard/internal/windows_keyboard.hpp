@@ -6,74 +6,98 @@
 #include "input/keyboard/internal/ikeyboard.hpp"
 #include "input/keyboard/kbkeys.hpp"
 #include <windows.h>
+#include <unordered_map>
 
 namespace Backend {
 
 class WindowsKeyboard : public Keyboard::IKeyboard {
 public:
-    WindowsKeyboard() 
-    {
-        instance = this;
-        hookDescriptor = nullptr;
-        keyStateType = 0;
-        hookStruct = nullptr;
+    WindowsKeyboard() : lastPressedKey(0), lastReleasedKey(0) {
+        for (int i = 0; i < 256; i++) {
+            previousKeyStates[i] = false;
+        }
     }
 
-    void Run() override 
-    {
-        hookDescriptor = SetWindowsHookEx(WH_KEYBOARD_LL, WindowsKeyboard::LowLevelKeyboardProc, nullptr, 0);
+    void Run() override {
+        UpdateAllKeyStates();
     }
 
-    void Stop() override 
-    {
-        if(hookDescriptor) {
-            UnhookWindowsHookEx(hookDescriptor);
-            hookDescriptor = nullptr;
-        }
-        return;
-    }
-    bool IsPressed() override 
-    {
-        if (keyStateType == WM_KEYDOWN || keyStateType == WM_SYSKEYDOWN) {
-            return true;
-        }
-        return false;
+    void Stop() override {
+        lastPressedKey = 0;
+        lastReleasedKey = 0;
     }
 
-    bool IsReleased() override  {
-        if (keyStateType == WM_KEYUP || keyStateType == WM_SYSKEYUP) {
-            return true;
-        }
-        return false;
+    bool IsPressed() override {
+        UpdateAllKeyStates();
+        return lastPressedKey != 0;
+    }
+
+    bool IsReleased() override {
+        UpdateAllKeyStates();
+        return lastReleasedKey != 0;
     }
 
     bool IsKeyPressed(Keyboard::KB_KEYS key) override {
-        if (key == static_cast<Keyboard::KB_KEYS>(hookStruct->scanCode)) 
-        {
-            return IsPressed();
-        }
-        return false;
+        int vkCode = ConvertToVirtualKey(key);
+        if (vkCode == 0) return false;
+        
+        return (GetAsyncKeyState(vkCode) & 0x8000) != 0;
     }
 
     int GetCode() override {
-        return 1; // Placeholder return value, should be replaced with actual logic
+        UpdateAllKeyStates();
+        return lastPressedKey != 0 ? lastPressedKey : lastReleasedKey;
     }
-    private:
-    static WindowsKeyboard *instance;
-    HHOOK hookDescriptor;
-    WPARAM keyStateType;
-    KBDLLHOOKSTRUCT *hookStruct;
-    
-    static LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
-    {
-        if(nCode == HC_ACTION) {
-            instance->hookStruct = reinterpret_cast<KBDLLHOOKSTRUCT *>(lParam);
-            instance->keyStateType = wParam;
+
+private:
+    bool previousKeyStates[256];  
+    int lastPressedKey;           
+    int lastReleasedKey;          
+
+    void UpdateAllKeyStates() {
+        lastPressedKey = 0;
+        lastReleasedKey = 0;
+
+        for (int vk = 0; vk < 256; vk++) {
+            bool currentState = (GetAsyncKeyState(vk) & 0x8000) != 0;
+            bool previousState = previousKeyStates[vk];
+
+            if (currentState && !previousState) {
+                lastPressedKey = vk;
+            }
+            else if (!currentState && previousState) {
+                lastReleasedKey = vk;
+            }
+
+            previousKeyStates[vk] = currentState;
+        }
+    }
+
+    int ConvertToVirtualKey(Keyboard::KB_KEYS key) {
+        switch (key) {
+            // Letras
+            // case Keyboard::KB_A: return 'A';
+            // case Keyboard::KB_B: return 'B';
+            // ... 
+            
+            // Números
+            // case Keyboard::KB_0: return '0';
+            // case Keyboard::KB_1: return '1';
+            // ...
+            
+            // Teclas especiais
+            // case Keyboard::KB_SPACE: return VK_SPACE;
+            // case Keyboard::KB_ENTER: return VK_RETURN;
+            // case Keyboard::KB_ESC: return VK_ESCAPE;
+            // case Keyboard::KB_SHIFT: return VK_SHIFT;
+            // case Keyboard::KB_CTRL: return VK_CONTROL;
+            // case Keyboard::KB_ALT: return VK_MENU;
+            
+            default:
+                return static_cast<int>(key);
         }
     }
 };
-
-    
 
 } // namespace Backend
 

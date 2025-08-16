@@ -93,7 +93,6 @@ enum KB_KEYS {
 #endif // linux
 #ifdef _WIN32
 enum KB_KEYS
-
 {
   K_LBUTTON = 0x01,
   K_RBUTTON = 0x02,
