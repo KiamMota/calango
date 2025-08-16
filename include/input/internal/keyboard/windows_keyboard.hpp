@@ -24,15 +24,9 @@ public:
     lastReleasedKey = 0;
   }
 
-  bool IsPressed() override {
-    UpdateAllKeyStates();
-    return lastPressedKey != 0;
-  }
+  bool IsPressed() override { return lastPressedKey != 0; }
 
-  bool IsReleased() override {
-    UpdateAllKeyStates();
-    return lastReleasedKey != 0;
-  }
+  bool IsReleased() override { return lastReleasedKey != 0; }
 
   bool IsKeyPressed(Keyboard::KB_KEYS key) override {
     int vkCode = ConvertToVirtualKey(key);
@@ -43,7 +37,6 @@ public:
   }
 
   int GetCode() override {
-    UpdateAllKeyStates();
     return lastPressedKey != 0 ? lastPressedKey : lastReleasedKey;
   }
 
@@ -69,31 +62,7 @@ private:
       previousKeyStates[vk] = currentState;
     }
   }
-
-  int ConvertToVirtualKey(Keyboard::KB_KEYS key) {
-    switch (key) {
-      // Letras
-      // case Keyboard::KB_A: return 'A';
-      // case Keyboard::KB_B: return 'B';
-      // ...
-
-      // Números
-      // case Keyboard::KB_0: return '0';
-      // case Keyboard::KB_1: return '1';
-      // ...
-
-      // Teclas especiais
-      // case Keyboard::KB_SPACE: return VK_SPACE;
-      // case Keyboard::KB_ENTER: return VK_RETURN;
-      // case Keyboard::KB_ESC: return VK_ESCAPE;
-      // case Keyboard::KB_SHIFT: return VK_SHIFT;
-      // case Keyboard::KB_CTRL: return VK_CONTROL;
-      // case Keyboard::KB_ALT: return VK_MENU;
-
-    default:
-      return static_cast<int>(key);
-    }
-  }
+}
 };
 
 } // namespace Backend
