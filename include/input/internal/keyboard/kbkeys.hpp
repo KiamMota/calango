@@ -3,8 +3,8 @@
 
 namespace Keyboard {
 
-#ifdef __linux__
 enum KB_KEYS {
+#ifdef __linux__
   K_RESERVED = 0,
   K_ESC = 1,
   K_1 = 2,
@@ -89,11 +89,8 @@ enum KB_KEYS {
   K_KP3 = 81,
   K_KP0 = 82,
   K_KPDOT = 83,
-};
 #endif // linux
 #ifdef _WIN32
-enum KB_KEYS
-{
   K_LBUTTON = 0x01,
   K_RBUTTON = 0x02,
   K_CANCEL = 0x03,
@@ -202,10 +199,7 @@ enum KB_KEYS
   K_RCTRL = 0xA3,
   K_LALT = 0xA4,
   K_RALT = 0xA5
-};
-
-
-} // NAMESPACE s
+#endif //_WIN32
+}; // namespace Keyboard
+} // namespace Keyboard
 #endif
-
-#endif 

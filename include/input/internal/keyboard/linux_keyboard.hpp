@@ -4,10 +4,8 @@
 #define _LINUXKEYBOARD_HH_
 
 /* local headers */
-#include "input/keyboard/internal/ikeyboard.hpp"
-#include "input/keyboard/kbkeys.hpp"
-
-#include "input/pch.hpp"
+#include "input/internal/keyboard/ikeyboard.hpp"
+#include "input/internal/keyboard/kbkeys.hpp"
 
 /* linux definitions */
 #define LINUX_GLOBAL_KBFD "/dev/input/by-id/"
@@ -46,7 +44,7 @@ public:
         return true;
     return false;
   }
-  
+
   bool IsKeyPressed(Keyboard::KB_KEYS kb) override {
     if (ReadFd())
       if (ev.type == EV_KEY && ev.value == 1) {

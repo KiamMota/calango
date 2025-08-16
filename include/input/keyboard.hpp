@@ -2,7 +2,7 @@
 #define _KEYBOARD_HPP_
 
 #ifdef __linux__
-#include "input/keyboard/internal/linux_keyboard.hpp"
+#include "input/internal/keyboard/linux_keyboard.hpp"
 #endif
 
 #ifdef _WIN32

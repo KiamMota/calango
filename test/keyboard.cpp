@@ -5,12 +5,11 @@ int main() {
   Keyboard::IKeyboard *kb = Keyboard::GetBackend();
   kb->Run();
   while (1) {
-    if (kb->IsPressed()) {
-      std::cout << "esta pressionando alguma coisa" << std::endl;
+    if (kb->IsPressed())
+      std::cout << "presisonou algo asmfdiafdsagf ads" << std::endl;
+    if (kb->IsKeyPressed(Keyboard::K_A)) {
+      std::cout << "PRESSIONOU A" << std::endl;
     }
-    //implementação da checagem de teclas
-    if (kb->IsKeyPressed(Keyboard::KB_KEYS::K_A)) {
-      std::cout << "A tecla A está pressionada!" << std::endl;
-    }
+    std::cout << kb->GetCode() << std::endl;
   }
 }

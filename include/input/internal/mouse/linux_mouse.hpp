@@ -2,7 +2,7 @@
 #ifndef _LINUXMOUSE_HPP_
 #define _LINUXMOUSE_HPP_
 
-#include "input/mouse/internal/imouse.hpp"
+#include "input/internal/mouse/imouse.hpp"
 #include <cstring>
 #include <fcntl.h>
 #include <filesystem>

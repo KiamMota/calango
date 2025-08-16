@@ -1,10 +1,10 @@
 #ifndef _IKEYBOARD_HH_
 #define _IKEYBOARD_HH_
 
-#include "input/base.hpp"
-#include "input/keyboard/kbkeys.hpp"
+#include "input/internal/base.hpp"
+#include "input/internal/keyboard/kbkeys.hpp"
 
-#include "input/pch.hpp"
+#include "input/internal/pch.hpp"
 
 namespace Keyboard {
 

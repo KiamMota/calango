@@ -1,7 +1,7 @@
 #ifndef _IMOUSE_HPP_
 #define _IMOUSE_HPP_
 
-#include "input/base.hpp"
+#include "input/internal/base.hpp"
 namespace Mouse {
 
 class IMouse : Base::IButton {
