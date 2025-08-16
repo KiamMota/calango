@@ -1,6 +1,8 @@
 #ifndef _KEYBOARD_HPP_
 #define _KEYBOARD_HPP_
 
+#include "input/internal/keyboard/kbkeys.hpp"
+
 #ifdef __linux__
 #include "input/internal/keyboard/linux_keyboard.hpp"
 #endif
@@ -10,7 +12,7 @@
 #endif
 
 namespace Keyboard {
-IKeyboard *GetBackend() {
+static IKeyboard *GetBackend() {
 #ifdef __linux__
   Backend::LinuxKeyboard *lnx_kb_instance = new Backend::LinuxKeyboard();
   return lnx_kb_instance;

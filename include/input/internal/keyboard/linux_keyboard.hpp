@@ -19,9 +19,8 @@ namespace Backend {
 class LinuxKeyboard : public Keyboard::IKeyboard {
 
 public:
-  LinuxKeyboard() { FindKeyboardDevice(); }
-
-  void Run() override {
+  LinuxKeyboard() {
+    FindKeyboardDevice();
     file_descriptor = open(file_name_descriptor.c_str(), O_RDONLY);
     if (file_descriptor == -1) {
       std::cerr << "error: cant open file descriptor." << std::endl;
@@ -29,40 +28,32 @@ public:
     }
   }
 
+  bool Run() override { return read(file_descriptor, &ev, sizeof(ev)) > 0; }
   void Stop() override { close(file_descriptor); }
 
   bool IsPressed() override {
-    read(file_descriptor, &ev, sizeof(ev));
     if (ev.type == EV_KEY && ev.value == 1)
       return true;
     return false;
   }
 
   bool IsReleased() override {
-    if (ReadFd())
-      if (ev.type == EV_KEY && ev.value == 0)
-        return true;
+    if (ev.type == EV_KEY && ev.value == 0)
+      return true;
     return false;
   }
 
   bool IsKeyPressed(Keyboard::KB_KEYS kb) override {
-    if (ReadFd())
-      if (ev.type == EV_KEY && ev.value == 1) {
-        if (ev.code == kb)
-          return true;
-      }
+    if (ev.type == EV_KEY && ev.value == 1) {
+      if (ev.code == kb)
+        return true;
+    }
     return false;
   }
 
   int GetCode() override { return ev.code; }
 
 private:
-  bool ReadFd() {
-    if (read(file_descriptor, &ev, sizeof(ev)) == -1)
-      return false;
-    return true;
-  }
-
   std::string file_name_descriptor;
   int file_descriptor;
   input_event ev;

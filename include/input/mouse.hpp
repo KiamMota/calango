@@ -1,9 +1,9 @@
 #ifndef _MOUSEBACKEND_HPP_
 #define _MOUSEBACKEND_HPP_
 
+#include "input/internal/mouse/imouse.hpp"
 #ifdef __linux__
-#include "input/mouse/internal/linux_mouse.hpp"
-
+#include "input/internal/mouse/linux_mouse.hpp"
 #endif
 
 namespace Mouse {

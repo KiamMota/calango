@@ -1,9 +1,9 @@
+#include <cstring>
 #ifdef __linux__
 #ifndef _LINUXMOUSE_HPP_
 #define _LINUXMOUSE_HPP_
 
 #include "input/internal/mouse/imouse.hpp"
-#include <cstring>
 #include <fcntl.h>
 #include <filesystem>
 #include <iostream>
@@ -46,15 +46,15 @@ private:
   }
 
 public:
-  LinuxMouse() { FindKeyboardDevice(); }
-
-  void Run() override {
-
+  LinuxMouse() {
+    FindKeyboardDevice();
     main_descriptor = open(fileNameDescriptor.c_str(), O_RDONLY);
     if (main_descriptor == -1) {
       std::cerr << "error: cant open mouse file descriptor." << std::endl;
     }
   }
+
+  bool Run() override { return read(main_descriptor, &ev, sizeof(ev)) > 0; }
 
   void Stop() override {
     close(main_descriptor);
@@ -63,56 +63,51 @@ public:
   }
 
   bool IsMoving() override {
-    if (ReadFd())
-      if (ev.type == EV_REL) {
-        return true;
-      }
+    if (ev.type == EV_REL) {
+      return true;
+    }
     return false;
   }
 
   bool IsStopped() override {
-    if (ReadFd())
-      if (ev.type != EV_REL)
-        return true;
+    if (ev.type != EV_REL)
+      return true;
     return false;
   }
 
   bool IsPressed() override {
-    if (ReadFd())
-      if (ev.type == EV_KEY) {
-        switch (ev.code) {
-        default:
-          return false;
-        case BTN_RIGHT:
-          if (ev.value == 1)
-            return true;
-        case BTN_LEFT:
-          if (ev.value == 1)
-            return true;
-        case BTN_MIDDLE:
-          if (ev.value == 1)
-            return true;
-        }
+    if (ev.type == EV_KEY) {
+      switch (ev.code) {
+      default:
+        return false;
+      case BTN_RIGHT:
+        if (ev.value == 1)
+          return true;
+      case BTN_LEFT:
+        if (ev.value == 1)
+          return true;
+      case BTN_MIDDLE:
+        if (ev.value == 1)
+          return true;
       }
+    }
     return false;
   }
 
   bool IsReleased() override {
-    if (ReadFd()) {
-      if (ev.type == EV_KEY) {
-        switch (ev.code) {
-        default:
-          return false;
-        case BTN_RIGHT:
-          if (ev.value == 0)
-            return true;
-        case BTN_LEFT:
-          if (ev.value == 0)
-            return true;
-        case BTN_MIDDLE:
-          if (ev.value == 0)
-            return true;
-        }
+    if (ev.type == EV_KEY) {
+      switch (ev.code) {
+      default:
+        return false;
+      case BTN_RIGHT:
+        if (ev.value == 0)
+          return true;
+      case BTN_LEFT:
+        if (ev.value == 0)
+          return true;
+      case BTN_MIDDLE:
+        if (ev.value == 0)
+          return true;
       }
     }
     return false;
