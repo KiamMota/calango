@@ -1,3 +1,7 @@
 build/*
+.cache/
 .cache/*
 compile_commands.json
+out/
+.vs/
+.vscode/

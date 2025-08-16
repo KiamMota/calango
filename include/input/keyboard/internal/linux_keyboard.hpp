@@ -7,10 +7,7 @@
 #include "input/keyboard/internal/ikeyboard.hpp"
 #include "input/keyboard/kbkeys.hpp"
 
-/* sdl includes */
-
-#include <iostream>
-#include <vector>
+#include "input/pch.hpp"
 
 /* linux definitions */
 #define LINUX_GLOBAL_KBFD "/dev/input/by-id/"
@@ -49,14 +46,7 @@ public:
         return true;
     return false;
   }
-
-  bool IsRepeated() override {
-    if (ReadFd())
-      if (ev.type == EV_KEY && ev.value == 2)
-        return true;
-    return false;
-  }
-
+  
   bool IsKeyPressed(Keyboard::KB_KEYS kb) override {
     if (ReadFd())
       if (ev.type == EV_KEY && ev.value == 1) {

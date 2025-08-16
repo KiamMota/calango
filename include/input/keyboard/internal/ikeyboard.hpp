@@ -4,11 +4,12 @@
 #include "input/base.hpp"
 #include "input/keyboard/kbkeys.hpp"
 
+#include "input/pch.hpp"
+
 namespace Keyboard {
 
 class IKeyboard : public Base::IButton {
 public:
-  virtual bool IsRepeated() = 0;
   virtual bool IsKeyPressed(Keyboard::KB_KEYS kb) = 0;
   virtual int GetCode() = 0;
 };
