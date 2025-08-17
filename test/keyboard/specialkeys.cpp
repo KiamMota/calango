@@ -23,6 +23,13 @@ void Pressed(Keyboard::IKeyboard *kb, Keyboard::KB_KEYS kben,
     std::cout << ">>> PRESSED >>> " << message << std::endl;
   }
 }
+void PressedQuit(Keyboard::IKeyboard *kb, Keyboard::KB_KEYS kben,
+                 const char *message) {
+  if (kb->IsKeyPressed(kben)) {
+    std::cout << ">>> PRESSED >>> " << message << std::endl;
+    kb->Stop();
+  }
+}
 
 void DefaultTest(Keyboard::IKeyboard *kb) {
   if (kb->IsPressed()) {
@@ -42,5 +49,6 @@ int main() {
     messages++;
     Pressed(kb, Keyboard::KBB_CAPSLOCK, "CAPSLOCK");
     Pressed(kb, Keyboard::KBB_SPACE, "SPACE");
+    PressedQuit(kb, Keyboard::KKB_0, "STOPING");
   }
 }
