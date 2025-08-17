@@ -43,7 +43,7 @@ void DefaultTest(Keyboard::IKeyboard *kb) {
 
 int main() {
   auto *kb = Keyboard::GetBackend();
-  while (kb->Run()) {
+  while (kb->Listen()) {
     DefaultTest(kb);
     ClearMessages();
     messages++;

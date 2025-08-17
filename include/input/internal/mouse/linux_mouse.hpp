@@ -1,4 +1,6 @@
+#include "input/internal/mouse/linux_mskeys.hpp"
 #include <cstring>
+#include <linux/input-event-codes.h>
 #ifdef __linux__
 #ifndef _LINUXMOUSE_HPP_
 #define _LINUXMOUSE_HPP_
@@ -54,7 +56,7 @@ public:
     }
   }
 
-  bool Run() override { return read(main_descriptor, &ev, sizeof(ev)) > 0; }
+  bool Listen() override { return read(main_descriptor, &ev, sizeof(ev)) > 0; }
 
   void Stop() override {
     close(main_descriptor);
@@ -69,10 +71,37 @@ public:
     return false;
   }
 
-  bool IsStopped() override {
-    if (ev.type != EV_REL)
-      return true;
+  bool IsButtonPressed(Mouse::MS_KEYS mouse) override {
+    if (ev.type == EV_KEY && ev.value == 1)
+      return (ev.code == mouse) ? true : false;
     return false;
+  }
+
+  bool IsButtonReleased(Mouse::MS_KEYS ms) override {
+    if (ev.type == EV_KEY && ev.code == ms)
+      return (ev.value == 0) ? true : false;
+    return false;
+  }
+
+  bool IsScrollingVertical() override {
+    if (ev.type == EV_REL && ev.code == REL_WHEEL) {
+      return (ev.value != 0) ? true : false;
+    }
+    return false;
+  }
+
+  bool IsScrollingHorizontal() override {
+    if (ev.type == EV_REL && ev.code == REL_HWHEEL) {
+      return (ev.value != 0) ? true : false;
+    }
+    return false;
+  }
+
+  short GetScrollAmount() override {
+    if (ev.type == EV_REL)
+      if (ev.code == REL_WHEEL || ev.code == REL_HWHEEL)
+        return ev.value;
+    return 0;
   }
 
   bool IsPressed() override {

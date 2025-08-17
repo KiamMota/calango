@@ -2,8 +2,8 @@
 
 int main() {
   Keyboard::IKeyboard *kb = Keyboard::GetBackend();
-  while (kb->Run()) {
+  while (kb->Listen()) {
     if (kb->IsPressed())
-      std::cout << kb->GetCode() << std::endl;
+      std::cout << kb->GetKey() << std::endl;
   }
 }
