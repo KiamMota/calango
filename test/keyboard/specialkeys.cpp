@@ -1,14 +1,36 @@
+#include "input/internal/keyboard/ikeyboard.hpp"
 #include "input/internal/keyboard/kbkeys.hpp"
 #include "input/keyboard.hpp"
+#include <cstdlib>
 #include <iostream>
+
+static int messages = 0;
+
+void ClearMessages() {
+
+  if (messages >= 21) {
+#ifdef __linux__
+    system("clear");
+#endif
+
+    messages = 0;
+  }
+}
+
+void Pressed(Keyboard::IKeyboard *kb, Keyboard::KB_KEYS kben,
+             const char *message) {
+  if (kb->IsKeyPressed(kben)) {
+    std::cout << ">>> PRESSED >>> " << message << std::endl;
+  }
+}
 
 void DefaultTest(Keyboard::IKeyboard *kb) {
   if (kb->IsPressed()) {
-    std::cout << "pressing correctly" << std::endl;
+    std::cout << "PRESSING correctly" << std::endl;
   }
 
   if (kb->IsReleased()) {
-    std::cout << "releasing correctly" << std::endl;
+    std::cout << "RELEASING correctly" << std::endl;
   }
 }
 
@@ -16,8 +38,9 @@ int main() {
   auto *kb = Keyboard::GetBackend();
   while (kb->Run()) {
     DefaultTest(kb);
-    if (kb->IsKeyPressed(Keyboard::KBB_ENTER)) {
-      std::cout << "pressed: " << "ENTER!" << std::endl;
-    }
+    ClearMessages();
+    messages++;
+    Pressed(kb, Keyboard::KBB_CAPSLOCK, "CAPSLOCK");
+    Pressed(kb, Keyboard::KBB_SPACE, "SPACE");
   }
 }
