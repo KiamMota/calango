@@ -5,7 +5,11 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+set(KB_TEST 
+  test/keyboard/specialkeys.cpp
+)
+
 add_executable(mouse test/mouse.cpp)
-add_executable(keyboard test/keyboard.cpp)
+add_executable(keyboard ${KB_TEST})
 
 include_directories(cppinput include)
