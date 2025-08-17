@@ -28,10 +28,20 @@ void RightPressed(Mouse::IMouse *a) {
   }
 }
 
+void MiddlePressed(Mouse::IMouse *a) {
+  if (a->IsButtonPressed(Mouse::MMS_MIDDLE)) {
+    print << M << PR << end;
+  }
+  if (a->IsButtonReleased(Mouse::MMS_MIDDLE)) {
+    print << M << RL << end;
+  }
+}
+
 int main() {
   auto *ms = Mouse::GetBackend();
   while (ms->Listen()) {
     LeftPressed(ms);
     RightPressed(ms);
+    MiddlePressed(ms);
   }
 }
