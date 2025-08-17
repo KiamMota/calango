@@ -1,3 +1,4 @@
+#include <linux/input-event-codes.h>
 #ifdef __linux__
 
 #ifndef _LINUXKEYBOARD_HH_
@@ -51,7 +52,14 @@ public:
     return false;
   }
 
-  int GetCode() override { return ev.code; }
+  bool IsKeyReleased(Keyboard::KB_KEYS kb) override {
+    if (ev.type == EV_KEY && ev.value == 0) {
+      return (ev.code == kb) ? true : false;
+    }
+    return false;
+  }
+
+  Keyboard::KB_KEYS GetKey() override { return (Keyboard::KB_KEYS)ev.code; }
 
 private:
   std::string file_name_descriptor;

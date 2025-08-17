@@ -49,6 +49,6 @@ int main() {
     messages++;
     Pressed(kb, Keyboard::KBB_CAPSLOCK, "CAPSLOCK");
     Pressed(kb, Keyboard::KBB_SPACE, "SPACE");
-    PressedQuit(kb, Keyboard::KKB_0, "STOPING");
+    Pressed(kb, Keyboard::KKB_LEFTCTRL, "CTRL");
   }
 }

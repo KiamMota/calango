@@ -4,13 +4,15 @@
 
 namespace Keyboard {
 
-enum KB_KEYS : int {
+enum KB_KEYS {
   KBB_ESC = 1,
   KBB_CAPSLOCK = 58,
   KBB_LEFTALT = 56,
   KBB_RIGHTALT = 100,
   KBB_LEFTSHIFT = 42,
   KBB_RIGHTSHIFT = 44,
+  KKB_LEFTCTRL = 29,
+  KKB_RIGHTCTRL = 97,
   KBB_SPACE = 57,
   KBB_ENTER = 28,
   KBB_KPENTER = 96,

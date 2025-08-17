@@ -11,5 +11,6 @@ set(KB_TEST
 
 add_executable(mouse test/mouse.cpp)
 add_executable(keyboard ${KB_TEST})
+add_executable(getcaps test/keyboard/getcaps.cpp)
 
 include_directories(cppinput include)
