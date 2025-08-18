@@ -50,72 +50,26 @@ an example with the IMouse and IKeyboard classes:
 
 the library never exposes concrete classes, only interfaces (abstract classes) and you can use, 
 through the backend of your system, the method `GetBackend(...);`
-
-``` cpp
-
-#include <iostream>
-#include "input/keyboard.hpp"
-
-int main()
-{
-   auto* kb = Keyboard::GetBackend();
-   while(kb->Run())
-   {
-       if(kb->IsPressed())
-       {
-          std::cout << "my key is pressed!" << std::endl;
-       }
-       kb->Stop();
-   }
-      return 0;     
-}
-
-```
-
-Example (IMouse):
-
-``` cpp
-
-#include <iostream>
-#include "input/mouse.hpp"
-
-int main()
-{
-    auto* ms = Mouse::GetBackend();
-    while(ms->Run())
-    {
-      if(ms->IsPressed())
-      {
-           std::cout << "my mouse is clicking!" << std::endl;
-      }
-}
-   return 0;
-}
-
-```
-
-this ensures that any input system that contains buttons can have uniqueness in its methods.
-
 ## Base::IButton
 
 the `Base` namespace is responsible for exposing common denominators internally in the application.
 
 the `IButton` interface exposes all the methods that any device containing a button should have. The signatures are as follows:
 
-`virtual void Run = 0;`
+`virtual void Listen() = 0;`
 
-responsible for initializing the internal structures and descriptors of the device.
+responsible for polling the internal structures and descriptors of the device.
 
 `virtual bool IsPressed() = 0;`
 
-checks the press activity of any button on the device and returns `true` if there was.
-
 `virtual bool IsReleased() = 0;`
 
-checks if the activity has stopped on the device, returning `true` if it has stopped.
+`virtual void IsPressed(std::function<void()>) = 0;`
 
-`virtual void Stop = 0;`
+`virtual void IsReleased(std::function<void()>) = 0;`
 
-responsible for closing descriptors and resetting internal structures of the implementation. (it only resets, it does not delete)
+`virtual void Stop() = 0;`
 
-and any interface that implements IButton contains these methods.
+The lib, in turn, can capture callbacks in addition to standard polling, with the Listen() and Stop() methods, which allow it to repeatedly listen to the system, and stop to stop listening.
+
+To delete the pointer to the specific class, simply use the Button::Free(Base::IButton **) function.
