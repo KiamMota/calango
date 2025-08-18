@@ -44,16 +44,13 @@ void DefaultTest(Keyboard::IKeyboard *kb) {
 
 int main() {
   auto *kb = Keyboard::GetBackend();
+
   while (kb->Listen()) {
-    // DefaultTest(kb);
-    // ClearMessages();
-    // messages++;
-    // Pressed(kb, Keyboard::KBB_CAPSLOCK, "CAPSLOCK");
-    // Pressed(kb, Keyboard::KBB_SPACE, "SPACE");
-    // Pressed(kb, Keyboard::KKB_LEFTCTRL, "CTRL");
-    kb->IsPressed([]() { std::cout << "hello world!" << std::endl; });
-    if (kb->IsKeyPressed(Keyboard::KKB_0))
+    if (kb->IsKeyPressed(Keyboard::KKB_0)) {
       Keyboard::Free(&kb);
+      break;
+      std::cout << "free memory" << std::endl;
+    }
   }
 
   std::cout << "exited with no errors." << std::endl;
