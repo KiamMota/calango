@@ -1,5 +1,6 @@
 #include "input/internal/mouse/linux_mskeys.hpp"
 #include <cstring>
+#include <functional>
 #include <linux/input-event-codes.h>
 #ifdef __linux__
 #ifndef _LINUXMOUSE_HPP_
@@ -140,6 +141,24 @@ public:
       }
     }
     return false;
+  }
+
+  void IsPressed(std::function<void()> callback) override {
+    while (this->Listen()) {
+      if (this->IsPressed()) {
+        callback();
+        return;
+      }
+    }
+  }
+
+  void IsReleased(std::function<void()> callback) override {
+    while (this->Listen()) {
+      if (this->IsReleased()) {
+        callback();
+        return;
+      }
+    }
   }
 };
 } // namespace Backend

@@ -1,3 +1,4 @@
+#include <functional>
 #include <linux/input-event-codes.h>
 #ifdef __linux__
 
@@ -42,6 +43,24 @@ public:
     if (ev.type == EV_KEY && ev.value == 0)
       return true;
     return false;
+  }
+
+  void IsPressed(std::function<void()> callback) override {
+    while (this->Listen()) {
+      if (this->IsPressed()) {
+        callback();
+        return;
+      }
+    }
+  }
+
+  void IsReleased(std::function<void()> callback) override {
+    while (this->Listen()) {
+      if (this->IsReleased()) {
+        callback();
+        return;
+      }
+    }
   }
 
   bool IsKeyPressed(Keyboard::KB_KEYS kb) override {
