@@ -30,6 +30,8 @@ public:
     }
   }
 
+  ~LinuxKeyboard() { Stop(); }
+
   bool Listen() override { return read(file_descriptor, &ev, sizeof(ev)) > 0; }
   void Stop() override { close(file_descriptor); }
 
@@ -46,8 +48,8 @@ public:
   }
 
   void IsPressed(std::function<void()> callback) override {
-    while (this->Listen()) {
-      if (this->IsPressed()) {
+    while (Listen()) {
+      if (IsPressed()) {
         callback();
         return;
       }
@@ -55,8 +57,8 @@ public:
   }
 
   void IsReleased(std::function<void()> callback) override {
-    while (this->Listen()) {
-      if (this->IsReleased()) {
+    while (Listen()) {
+      if (IsReleased()) {
         callback();
         return;
       }

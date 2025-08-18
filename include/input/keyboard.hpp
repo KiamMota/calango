@@ -2,12 +2,14 @@
 #define _KEYBOARD_HPP_
 
 #ifdef __linux__
-#include "input/internal/keyboard/linux_keyboard.hpp"
+#include "input/internal/keyboard/back/linux_keyboard.hpp"
 #endif
 
 #ifdef _WIN32
 #include "input/keyboard/internal/windows_keyboard.hpp"
 #endif
+
+#include "input/internal/keyboard/ikeyboard.hpp"
 
 namespace Keyboard {
 static IKeyboard *GetBackend() {

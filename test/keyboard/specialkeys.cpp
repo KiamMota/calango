@@ -1,5 +1,6 @@
 #include "input/internal/keyboard/ikeyboard.hpp"
 #include "input/internal/keyboard/kbkeys.hpp"
+#include "input/internal/keyboard/utils.hpp"
 #include "input/keyboard.hpp"
 #include <cstdlib>
 #include <iostream>
@@ -50,7 +51,10 @@ int main() {
     // Pressed(kb, Keyboard::KBB_CAPSLOCK, "CAPSLOCK");
     // Pressed(kb, Keyboard::KBB_SPACE, "SPACE");
     // Pressed(kb, Keyboard::KKB_LEFTCTRL, "CTRL");
-
     kb->IsPressed([]() { std::cout << "hello world!" << std::endl; });
+    if (kb->IsKeyPressed(Keyboard::KKB_0))
+      Keyboard::Free(&kb);
   }
+
+  std::cout << "exited with no errors." << std::endl;
 }
