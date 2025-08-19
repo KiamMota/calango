@@ -2,6 +2,7 @@
 #define _BASE_HPP_
 
 #include <functional>
+
 namespace Base {
 class IButton {
 public:

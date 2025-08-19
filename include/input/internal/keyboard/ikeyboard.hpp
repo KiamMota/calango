@@ -4,8 +4,6 @@
 #include "input/internal/base.hpp"
 #include "input/internal/keyboard/kbkeys.hpp"
 
-#include "input/internal/pch.hpp"
-
 namespace Keyboard {
 
 class IKeyboard : public Base::IButton {

@@ -6,9 +6,11 @@
 #endif
 
 #ifdef _WIN32
-#include "input/keyboard/internal/windows_keyboard.hpp"
-#endif
+#include "input/internal/keyboard/back/windows_keyboard.hpp"
+#endif 
 
+#include "input/internal/keyboard/kbkeys.hpp"
+#include "input/internal/keyboard/utils.hpp"
 #include "input/internal/keyboard/ikeyboard.hpp"
 
 namespace Keyboard {

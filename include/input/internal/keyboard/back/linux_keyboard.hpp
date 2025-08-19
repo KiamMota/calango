@@ -32,7 +32,7 @@ public:
 
   ~LinuxKeyboard() { Stop(); }
 
-  bool Listen() override { return read(file_descriptor, &ev, sizeof(ev)) > 0; }
+  void Listen() override { return read(file_descriptor, &ev, sizeof(ev)) > 0; }
   void Stop() override { close(file_descriptor); }
 
   bool IsPressed() override {

@@ -8,8 +8,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(KB_TEST 
   test/keyboard/specialkeys.cpp
 )
-
-add_executable(mouse test/mouse.cpp)
-add_executable(keyboard ${KB_TEST})
+add_executable(simkb test/keyboard/keyboard.cpp)
 
 include_directories(cppinput include)
