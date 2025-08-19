@@ -1,5 +1,3 @@
-#include "input/internal/keyboard/ikeyboard.hpp"
-#include "input/internal/keyboard/kbkeys.hpp"
 #include "input/internal/keyboard/utils.hpp"
 #include "input/keyboard.hpp"
 #include <cstdlib>
@@ -46,10 +44,11 @@ int main() {
   auto *kb = Keyboard::GetBackend();
 
   while (kb->Listen()) {
+    DefaultTest(kb);
     if (kb->IsKeyPressed(Keyboard::KKB_0)) {
+      std::cout << "zero is pressed!" << std::endl;
       Keyboard::Free(&kb);
       break;
-      std::cout << "free memory" << std::endl;
     }
   }
 
