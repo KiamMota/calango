@@ -9,6 +9,7 @@
 #include "input/internal/keyboard/ikeyboard.hpp"
 #include "input/internal/keyboard/linux/linux_kbkeys.hpp"
 
+#include <iostream>
 /* linux definitions */
 #define LINUX_GLOBAL_KBFD "/dev/input/by-id/"
 #include <fcntl.h>
@@ -32,7 +33,7 @@ public:
 
   ~LinuxKeyboard() { Stop(); }
 
-  void Listen() override { return read(file_descriptor, &ev, sizeof(ev)) > 0; }
+  bool Listen() override { return read(file_descriptor, &ev, sizeof(ev)) > 0; }
   void Stop() override { close(file_descriptor); }
 
   bool IsPressed() override {
