@@ -1,4 +1,4 @@
-# Calango (calango-lib)
+# Calango
 
 [Image](assets/lilicon.png)
 
