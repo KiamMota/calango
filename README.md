@@ -1,5 +1,7 @@
 # Calango (calango-lib)
 
+[Image](assets/lilicon.png)
+
 **Calango** is a cross-platform bloat-free library for capturing operating system inputs.
 
 the central part which is the capture of inputs and is completely header only, because it only needs the calls from the respective operating system.
