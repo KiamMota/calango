@@ -1,6 +1,6 @@
 # Calango
 
-[Image](assets/lilicon.png)
+![Image](assets/lilicon.png)
 
 **Calango** is a cross-platform bloat-free library for capturing operating system inputs.
 
