@@ -7,7 +7,7 @@
 
 /* local headers */
 #include "input/internal/keyboard/ikeyboard.hpp"
-#include "input/internal/keyboard/kbkeys.hpp"
+#include "input/internal/keyboard/linux/linux_kbkeys.hpp"
 
 /* linux definitions */
 #define LINUX_GLOBAL_KBFD "/dev/input/by-id/"

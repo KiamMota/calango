@@ -1,6 +1,8 @@
 #ifndef _BASE_HPP_
 #define _BASE_HPP_
 
+#define foo() std::cout << "no implemented yet." << std::endl;
+
 #include <functional>
 
 namespace Base {

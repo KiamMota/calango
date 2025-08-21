@@ -2,7 +2,7 @@
 #define _IKEYBOARD_HH_
 
 #include "input/internal/base.hpp"
-#include "input/internal/keyboard/kbkeys.hpp"
+#include "input/internal/keyboard/linux/linux_kbkeys.hpp"
 
 namespace Keyboard {
 
