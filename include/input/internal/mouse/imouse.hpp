@@ -2,7 +2,8 @@
 #define _IMOUSE_HPP_
 
 #include "input/internal/base.hpp"
-#include "input/internal/mouse/linux_mskeys.hpp"
+#include "input/internal/mouse/mskeys.hpp"
+
 namespace Mouse {
 
 class IMouse : public Base::IButton {

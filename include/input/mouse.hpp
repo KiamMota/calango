@@ -3,7 +3,7 @@
 
 #include "input/internal/mouse/imouse.hpp"
 #ifdef __linux__
-#include "input/internal/mouse/linux_mouse.hpp"
+#include "input/internal/mouse/linux/linux_mouse.hpp"
 #endif
 
 #include "input/internal/mouse/mskeys.hpp"

@@ -1,15 +1,15 @@
-#include "input/internal/mouse/linux_mskeys.hpp"
-#include <cstring>
-#include <functional>
-#include <linux/input-event-codes.h>
 #ifdef __linux__
 #ifndef _LINUXMOUSE_HPP_
 #define _LINUXMOUSE_HPP_
 
 #include "input/internal/mouse/imouse.hpp"
+#include "input/internal/mouse/linux/linux_mouse.hpp"
+#include <cstring>
 #include <fcntl.h>
 #include <filesystem>
+#include <functional>
 #include <iostream>
+#include <linux/input-event-codes.h>
 #include <linux/input.h>
 #include <string>
 #include <unistd.h>
