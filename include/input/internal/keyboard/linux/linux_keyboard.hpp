@@ -1,3 +1,4 @@
+#include <cstring>
 #include <functional>
 #include <linux/input-event-codes.h>
 #ifdef __linux__
@@ -34,7 +35,12 @@ public:
   ~LinuxKeyboard() { Stop(); }
 
   bool Listen() override { return read(file_descriptor, &ev, sizeof(ev)) > 0; }
-  void Stop() override { close(file_descriptor); }
+
+  void Stop() override {
+    close(file_descriptor);
+    file_descriptor = -1;
+    memset(&ev, 0, sizeof(ev));
+  }
 
   bool IsPressed() override {
     if (ev.type == EV_KEY && ev.value == 1)
