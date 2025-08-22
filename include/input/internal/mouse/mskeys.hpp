@@ -5,8 +5,4 @@
 #include "input/internal/mouse/linux/linux_mskeys.hpp"
 #endif
 
-namespace Mouse {
-enum MS_KEYS : int;
-}
-
 #endif

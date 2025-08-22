@@ -3,13 +3,11 @@
 #define _LINUXMOUSE_HPP_
 
 #include "input/internal/mouse/imouse.hpp"
-#include "input/internal/mouse/linux/linux_mouse.hpp"
 #include <cstring>
 #include <fcntl.h>
 #include <filesystem>
 #include <functional>
 #include <iostream>
-#include <linux/input-event-codes.h>
 #include <linux/input.h>
 #include <string>
 #include <unistd.h>
@@ -72,13 +70,13 @@ public:
     return false;
   }
 
-  bool IsButtonPressed(Mouse::MS_KEYS mouse) override {
+  bool IsButtonPressed(Mouse::MS_BUTTONS mouse) override {
     if (ev.type == EV_KEY && ev.value == 1)
       return (ev.code == mouse) ? true : false;
     return false;
   }
 
-  bool IsButtonReleased(Mouse::MS_KEYS ms) override {
+  bool IsButtonReleased(Mouse::MS_BUTTONS ms) override {
     if (ev.type == EV_KEY && ev.code == ms)
       return (ev.value == 0) ? true : false;
     return false;

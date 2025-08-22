@@ -6,8 +6,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(KB test/keyboard)
+set(MS test/mouse)
 
-add_executable(mouse test/mouse.cpp)
+add_executable(mouse ${MS}/mouse.cpp)
 add_executable(kb ${KB}/keyboard.cpp)
 
 

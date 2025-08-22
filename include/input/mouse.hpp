@@ -6,8 +6,6 @@
 #include "input/internal/mouse/linux/linux_mouse.hpp"
 #endif
 
-#include "input/internal/mouse/mskeys.hpp"
-
 namespace Mouse {
 static IMouse *GetBackend() {
 #ifdef __linux__
