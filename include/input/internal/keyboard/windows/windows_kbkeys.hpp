@@ -3,7 +3,7 @@
 #ifndef _WIN_KBKEYS_HPP_
 #define _WIN_KBKEYS_HPP_
 
-#include "kbkeys.hpp"
+#include "input/internal/keyboard/kbkeys.hpp"
 
 namespace Keyboard {
 

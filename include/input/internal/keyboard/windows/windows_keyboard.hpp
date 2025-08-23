@@ -1,103 +1,101 @@
 #ifdef _WIN32
 
-#ifndef _WINDOWSKEYBOARD_HH_
-#define _WINDOWSKEYBOARD_HH_
+#ifndef _WINDOWSKB_HPP_
+#define _WINDOWSKB_HPP_
 
-#include "input/internal/keyboard/ikeyboard.hpp"
-#include "input/internal/keyboard/kbkeys.hpp"
-#include <windows.h>
-#include <functional>
+#include <Windows.h>
+#include <input/internal/keyboard/ikeyboard.hpp>
 
 namespace Backend {
 
-class WindowsKeyboard : public Keyboard::IKeyboard {
-public:
-  WindowsKeyboard() : lastPressedKey(static_cast<Keyboard::KB_KEYS>(0)), 
-                      lastReleasedKey(static_cast<Keyboard::KB_KEYS>(0)) {
-    for (int i = 0; i < 256; i++) {
-      previousKeyStates[i] = false;
-    }
-  }
+class WindowsKeyboard : public Keyboard::IKeyboard 
+{
+    public:
+        WindowsKeyboard()
+        {
+            for (short i = 0; i < 256; ++i) prevState[i] = false;
+        }
+        ~WindowsKeyboard()
+        {
+            // Cleanup if necessary
+        }
+        bool Listen() override
+        {
+            stopFlag = false;
+            UpdateKeyScan();
+            return true;
+        }
+        void Stop() override
+        {
+            stopFlag = true;
+            UpdateKeyVars();
+        }
+        bool IsPressed() override
+        {
+            return isPressed;
+        }
+        bool IsReleased() override
+        {
+            return isReleased;
+        }
+        void IsPressed(std::function<void()> callback) override
+        {
+            while(true)
+            {
+                if(isPressed) callback();
+                UpdateKeyScan();
+                if(stopFlag) break;
+            }
+        }
+        void IsReleased(std::function<void()> callback) override
+        {
+            while(true)
+            {
+                if(isReleased) callback();
+                UpdateKeyScan();
+                if(stopFlag) break;
+            }
+        }
+        bool IsKeyPressed(Keyboard::KB_KEYS kb) override
+        {
+            return (GetAsyncKeyState(static_cast<int>(kb)) & 0x8000) != 0;
+        }
+        bool IsKeyReleased(Keyboard::KB_KEYS kb) override
+        {
+            return (GetAsyncKeyState(static_cast<int>(kb)) & 0x8000) == 0;
+        }
+        Keyboard::KB_KEYS GetKey() override
+        {
+            return static_cast<Keyboard::KB_KEYS>(virtualKey);
+        }
 
-  bool Listen() override { 
-    UpdateAllKeyStates(); 
-  }
+    private:
+        void UpdateKeyVars()
+        {
+            isPressed = false;
+            isReleased = false;    
+        }
 
-  void Stop() override {
-    lastPressedKey = static_cast<Keyboard::KB_KEYS>(0);
-    lastReleasedKey = static_cast<Keyboard::KB_KEYS>(0);
-  }
-
-  bool IsPressed() override { 
-    return static_cast<int>(lastPressedKey) != 0; 
-  }
-
-  bool IsReleased() override { 
-    return static_cast<int>(lastReleasedKey) != 0; 
-  }
-
-  void IsPressed(std::function<void()> callback) override {
-    while (true) {
-      Listen();
-      if (IsPressed()) {
-        callback();
-        return;
-      }
-    }
-  }
-
-  void IsReleased(std::function<void()> callback) override {
-    while (true) {
-      Listen();
-      if (IsReleased()) {
-        callback();
-        return;
-      }
-    }
-  }
-
-  bool IsKeyPressed(Keyboard::KB_KEYS key) override {
-    int vkCode = static_cast<int>(key);
-    return (GetAsyncKeyState(vkCode) & 0x8000) != 0;
-  }
-
-  bool IsKeyReleased(Keyboard::KB_KEYS key) override {
-    int vkCode = static_cast<int>(key);
-    bool currentState = (GetAsyncKeyState(vkCode) & 0x8000) != 0;
-    bool previousState = previousKeyStates[vkCode];
-    
-    return !currentState && previousState;
-  }
-
-  Keyboard::KB_KEYS GetKey() override {
-    return static_cast<int>(lastPressedKey) != 0 ? lastPressedKey : lastReleasedKey;
-  }
-
-private:
-  bool previousKeyStates[256];
-  Keyboard::KB_KEYS lastPressedKey;
-  Keyboard::KB_KEYS lastReleasedKey;
-
-  void UpdateAllKeyStates() {
-    lastPressedKey = static_cast<Keyboard::KB_KEYS>(0);
-    lastReleasedKey = static_cast<Keyboard::KB_KEYS>(0);
-
-    for (int vk = 0; vk < 256; vk++) {
-      bool currentState = (GetAsyncKeyState(vk) & 0x8000) != 0;
-      bool previousState = previousKeyStates[vk];
-
-      if (currentState && !previousState) {
-        lastPressedKey = static_cast<Keyboard::KB_KEYS>(vk);
-      } else if (!currentState && previousState) {
-        lastReleasedKey = static_cast<Keyboard::KB_KEYS>(vk);
-      }
-
-      previousKeyStates[vk] = currentState;
-    }
-  }
+        void UpdateKeyScan()
+        {
+            if(stopFlag) return;
+            UpdateKeyVars();
+            for(virtualKey = 0x08; virtualKey <= 0xFE; ++virtualKey)
+            {
+                bool pressedNow = (GetAsyncKeyState(virtualKey) & 0x8000) != 0;
+                if(pressedNow && !prevState[virtualKey]) isPressed = true;
+                if(!pressedNow && prevState[virtualKey]) isReleased = true;
+                prevState[virtualKey] = pressedNow;
+            }
+        }
+        bool stopFlag;
+        int virtualKey;
+        bool isPressed;
+        bool isReleased;
+        
+        bool prevState[256];
 };
+} // namespace Backend
 
-} 
-
-#endif // _WINDOWSKEYBOARD_HH_
-#endif // _WIN32
+#endif //_WINDOWSKB_HPP_
+#endif //_WIN32

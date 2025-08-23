@@ -1,16 +1,17 @@
 #ifndef _KEYBOARD_HPP_
 #define _KEYBOARD_HPP_
 
+#include "input/internal/keyboard/kbkeys.hpp"
+
 #include "input/internal/base.hpp"
 #ifdef __linux__
 #include "input/internal/keyboard/linux/linux_keyboard.hpp"
 #endif
 
 #ifdef _WIN32
-#include "input/internal/keyboard/back/windows_keyboard.hpp"
+#include "input/internal/keyboard/windows/windows_keyboard.hpp"
 #endif 
 
-#include "input/internal/keyboard/kbkeys.hpp"
 #include "input/internal/keyboard/utils.hpp"
 #include "input/internal/keyboard/ikeyboard.hpp"
 
