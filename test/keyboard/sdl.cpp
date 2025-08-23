@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 
+
 void RunWindow() {
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
     std::cerr << "Erro ao inicializar SDL: " << SDL_GetError() << std::endl;

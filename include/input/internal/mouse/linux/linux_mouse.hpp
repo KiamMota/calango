@@ -88,15 +88,8 @@ public:
     }
     return false;
   }
-
-  bool IsScrollingHorizontal() override {
-    if (ev.type == EV_REL && ev.code == REL_HWHEEL) {
-      return (ev.value != 0) ? true : false;
-    }
-    return false;
-  }
-
-  short GetScrollAmount() override {
+  
+  short GetScrollAmount() overzride {
     if (ev.type == EV_REL)
       if (ev.code == REL_WHEEL || ev.code == REL_HWHEEL)
         return ev.value;

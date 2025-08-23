@@ -9,5 +9,6 @@ set(KB test/keyboard)
 set(MS test/mouse)
 
 add_executable(kb ${KB}/keyboard.cpp)
+add_executable(ms ${MS}/mouse.cpp)
 
 include_directories(cppinput include)

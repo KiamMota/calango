@@ -4,5 +4,8 @@
 #ifdef __linux__
 #include "input/internal/mouse/linux/linux_mskeys.hpp"
 #endif
+#ifdef _WIN32
+#include "input/internal/mouse/windows/windows_mskeys.hpp"
+#endif
 
 #endif

@@ -1,5 +1,7 @@
 #include "input/mouse.hpp"
 
+#include <iostream>
+
 int main() {
   Mouse::IMouse *ms = Mouse::GetBackend();
 
@@ -7,9 +9,10 @@ int main() {
     if (ms->IsMoving()) {
       std::cout << "mouse is moving" << std::endl;
     }
-    if (ms->IsButtonPressed(Mouse::MMS_LEFT)) {
-      break;
+    if(ms->IsPressed()) {
+      std::cout << "mouse is pressed" << std::endl;
     }
+
   }
   ms->Stop();
 }
