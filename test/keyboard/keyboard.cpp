@@ -1,6 +1,11 @@
 #include "input/keyboard.hpp"
 #include <iostream>
 
+void placeHolder()
+{
+  std::cout << "Hello World!" << std::endl;
+}
+
 int main() {
   Keyboard::IKeyboard *kb = Keyboard::GetBackend();
   while (kb->Listen()) {
@@ -13,7 +18,9 @@ int main() {
     if (kb->IsKeyPressed(Keyboard::KKB_0)) {
       break;
     }
+  
   }
   kb->Stop();
   std::cout << "keyboard parou de ser lido..." << std::endl;
+  Keyboard::Free(&kb);
 }
